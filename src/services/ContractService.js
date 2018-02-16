@@ -15,6 +15,8 @@ class ContractService {
             this.web3 = new Web3(new Web3.providers.HttpProvider(NODE_URL));
         }
 
+        this.web3.eth.defaultAccount = this.web3.eth.coinbase;
+
         var PropertyTokenizerContract = this.web3.eth.contract(PropertyTokenizerABI);
         var ShareContract = this.web3.eth.contract(ShareABI);
         this.PropertyTokenizerContractInstance = PropertyTokenizerContract.at(PROPERTYTOKENIZER_CONTRACT_ADDRESS);
@@ -31,6 +33,10 @@ class ContractService {
 
     getBalanceOf(address, callback){
         this.ShareContractInstance.balanceOf(address, callback);
+    }
+
+    transfer(address, amount, callback){
+        this.ShareContractInstance.transfer(address, amount, callback);
     }
 
 }
