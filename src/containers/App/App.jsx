@@ -12,13 +12,17 @@ export default class App extends Component {
 
     render() {
         return (
-            <article className='app__container'>
+            <article className='app__container container'>
                 <Header {...this.state} />
+                <div className='d-flex justify-content-center'>
+                <div className='jumbotron bg-dark w-75'>
                 <Switch>
                     <Route exact path='/' render={(props) => (
                         <Page {...props} />
                     )} />
                 </Switch>
+                </div>
+                </div>
             </article >
         );
     }

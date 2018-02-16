@@ -3,7 +3,7 @@ const PropertyTokenizerABI = require('./PropertyTokenizer.json');
 const ShareABI = require('./Share.json');
 
 const PROPERTYTOKENIZER_CONTRACT_ADDRESS = '0x4e72770760c011647d4873f60a3cf6cdea896cd8';
-const SHARE_CONTRACT_ADDRESS = '0xdda6327139485221633a1fcd65f4ac932e60a2e1';
+const SHARE_CONTRACT_ADDRESS = '0x4d8716f45b9c1fc7c0d3575254009ffc9462c757';
 const NODE_URL = 'http://localhost:7545';
 
 class ContractService {

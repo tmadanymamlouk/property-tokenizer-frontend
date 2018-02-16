@@ -1,5 +1,13 @@
 .header {
-    &__container {       
-
+    &__container {
+        text-align: center;
     }
+}
+
+.logo {
+    max-width: 200px;
+}
+
+.link {
+    color: #ffb200;
 }

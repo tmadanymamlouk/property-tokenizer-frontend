@@ -4,7 +4,7 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = (env) => {
     const plugins = [
-        // new CopyWebpackPlugin([{ from: './assets/', to: 'assets' }])
+        new CopyWebpackPlugin([{ from: './assets/', to: 'assets' }])
     ];
     if (env && env.prod) {
         plugins.push(

@@ -10,12 +10,15 @@ export default class Header extends Component {
 
     render() {
         return (
-            <header className='header__container'>
-                <h1 className='header__heading'>
+            <header className='header__container container p-4'>
+                <h3 className='header__heading'>
+                    <img className='img-fluid logo' src='assets/img/immowelt-only.png' />
                     <Link to={'/'}>
-                        Immowelt Property Tokenizer
+                        <p className='p-2 link'>
+                            Property Tokenizer
+                        </p>
                     </Link>
-                </h1>
+                </h3>
             </header>
         );
     }

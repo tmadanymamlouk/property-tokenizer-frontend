@@ -35,11 +35,11 @@ export default class Page extends Component {
     }
 
     render() {
-
+        console.log(this.state);
         return (
-            <section className='examplePage__container'>
-                <p>Contract says '{this.state.response}'</p>
-                <p>Total Supply: {this.state.totalSupply.toString()}</p>
+            <section className='page'>
+                <p>{this.state.response}</p>
+                <p>Total number of shares: {this.state.totalSupply.toLocaleString()}</p>
             </section >
         );
     }
