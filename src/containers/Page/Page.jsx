@@ -3,7 +3,7 @@ import './Page.scss';
 
 import ApiService from '../../services/ApiService'
 import ContractService from '../../services/ContractService'
-import BigNumber from 'bignumber.js';
+//import BigNumber from 'bignumber.js';
 
 export default class Page extends Component {
     constructor(props) {
@@ -11,7 +11,7 @@ export default class Page extends Component {
         this.state = {
             response: null,
             totalSupply: 0,
-            balanceOf: 0,
+            balanceOfUser: 0,
             address: null
         }
     }
@@ -25,7 +25,7 @@ export default class Page extends Component {
 
         let totalSupplyCallback = (error, result) => {
             this.setState({
-                totalSupply: new BigNumber(result).toNumber()
+                totalSupply: result.toString()
             });
         }
 
@@ -41,8 +41,9 @@ export default class Page extends Component {
 
     sendSearchRequest() {
         let balanceOfCallback = (error, result) => {
+            console.log(result.toString());
             this.setState({
-                balanceOf: new BigNumber(result).toNumber()
+                balanceOfUser: result.toString()
             });
         }
         ContractService.getBalanceOf(this.state.address, balanceOfCallback);
