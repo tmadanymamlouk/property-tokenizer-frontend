@@ -14,7 +14,7 @@ export default class Header extends Component {
                 <h3 className='header__heading'>
                     <img className='img-fluid logo' src='assets/img/immowelt-only.png' />
                     <Link to={'/'}>
-                        <p className='p-2 link'>
+                        <p className='p-3 link'>
                             Property Tokenizer
                         </p>
                     </Link>
