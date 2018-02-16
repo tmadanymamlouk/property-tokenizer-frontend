@@ -3,7 +3,7 @@ import './Page.scss';
 
 import ApiService from '../../services/ApiService'
 import ContractService from '../../services/ContractService'
-import BigNumber from 'bignumber.js';
+// import BigNumber from 'bignumber.js';
 
 export default class Page extends Component {
     constructor(props) {
@@ -11,8 +11,10 @@ export default class Page extends Component {
         this.state = {
             response: null,
             totalSupply: 0,
-            balanceOf: 0,
-            address: null
+            balanceOfUser: 0,
+            address: null,
+            transferAmount: 0,
+            receiverAddress: null
         }
     }
 
@@ -24,52 +26,92 @@ export default class Page extends Component {
         }
 
         let totalSupplyCallback = (error, result) => {
+            console.log("totalSupply: " + result)
             this.setState({
-                totalSupply: new BigNumber(result).toNumber()
+                totalSupply: result.toString()
             });
         }
 
-        ContractService.hello(helloCallback);
         ContractService.getTotalSupply(totalSupplyCallback);
     }
 
-    handleChange(event) {
+    onOwnerAddressChange(event) {
         this.setState({
             address: event.target.value
         });
     }
 
-    sendSearchRequest() {
+    transferAmountChangeHandler(event){
+        this.setState({
+            transferAmount: event.target.value
+        });
+    }
+
+    receiverAddressChangeHandler(event){
+        this.setState({
+            receiverAddress: event.target.value
+        });
+    }
+
+    getBalanceRequest() {
         let balanceOfCallback = (error, result) => {
+            console.log("balance: " + result)
             this.setState({
-                balanceOf: new BigNumber(result).toNumber()
+                balanceOfUser: result.toString()
             });
         }
-
-        console.log("send: " + this.state.address);
+        console.log("getBalance: ", this.state.address);
         ContractService.getBalanceOf(this.state.address, balanceOfCallback);
+    }
+
+    doTransfer() {
+        let transferCallback = (error, result) => {
+            this.setState({
+                transferResult: result.toString()
+            });
+        }
+        console.log("receiverAddress: ", this.state.receiverAddress);
+        ContractService.transfer(this.state.receiverAddress, this.state.transferAmount, transferCallback);
     }
 
     componentDidUpdate(prevProps) {
     }
 
     render() {
-
         let userShares;
-        if(this.state.address){
-            userShares = <p>Anzahl: {this.state.balanceOf.toString()}/{this.state.totalSupply.toString()}</p>
+        let success;
+console.log("gnaa: ",this.state.address);
+        if (this.state.address) {
+            userShares = <p>Anzahl: {this.state.balanceOfUser}/{this.state.totalSupply}</p>
+        }
+        if (this.state.transferResult){
+            success = <p>Result: {this.state.transferResult}</p>
         }
 
         return (
             <section className='examplePage__container'>
-                <p>Gesamtzahl aller Anteile: {this.state.totalSupply.toString()}</p>
+                <p>Gesamtzahl aller Anteile: {this.state.totalSupply}</p>
 
                 <p>
                     Zeige Anteile von diesem User:
-                    <input onChange={this.handleChange.bind(this)} size='70'
+                    <input onChange={this.onOwnerAddressChange.bind(this)} size='70'
                            value={this.state.searchTerm}/>
-                    <button onClick={this.sendSearchRequest.bind(this)}>Suchen</button>
+                    <button onClick={this.getBalanceRequest.bind(this)}>Suchen</button>
                 </p>
+                {userShares}
+
+                <div>
+                    <div className='daysRemainingForm__consumedDays'>
+                        <span>Übertrage  </span>
+                        <input onChange={this.transferAmountChangeHandler.bind(this)}
+                               type="number"/>
+                        <span>Anteile an</span>
+                        <input onChange={this.receiverAddressChangeHandler.bind(this)}
+                               size="70"/>
+                    </div>
+                    <button onClick={this.doTransfer.bind(this)}>Transfer</button>
+                </div>
+                {success}
 
             </section>
         );
