@@ -3,7 +3,7 @@ import './Page.scss';
 
 import ApiService from '../../services/ApiService'
 import ContractService from '../../services/ContractService'
-//import BigNumber from 'bignumber.js';
+// import BigNumber from 'bignumber.js';
 
 export default class Page extends Component {
     constructor(props) {
@@ -12,7 +12,9 @@ export default class Page extends Component {
             response: null,
             totalSupply: 0,
             balanceOfUser: 0,
-            address: null
+            address: null,
+            transferAmount: 0,
+            receiverAddress: null
         }
     }
 
@@ -33,13 +35,25 @@ export default class Page extends Component {
         ContractService.getTotalSupply(totalSupplyCallback);
     }
 
-    handleChange(event) {
+    onOwnerAddressChange(event) {
         this.setState({
             address: event.target.value
         });
     }
 
-    sendSearchRequest() {
+    transferAmountChangeHandler(event){
+        this.setState({
+            transferAmount: event.target.value
+        });
+    }
+
+    receiverAddressChangeHandler(event){
+        this.setState({
+            receiverAddress: event.target.value
+        });
+    }
+
+    getBalanceRequest() {
         let balanceOfCallback = (error, result) => {
             console.log(result.toString());
             this.setState({
@@ -78,25 +92,27 @@ export default class Page extends Component {
                 <br/>
                 <br/>
                 <p>
-                Anteile von User suchen
+                    Zeige Anteile von diesem User:
+                    <input onChange={this.onOwnerAddressChange.bind(this)} size='70'
+                           value={this.state.searchTerm}/>
+                    <button onClick={this.getBalanceRequest.bind(this)}>Suchen</button>
                 </p>
-                <div className="input-group mb-3">
-                    <textarea
-                        rows='2'
-                        className="form-control"
-                        onChange={this.handleChange.bind(this)}
-                        size='70'
-                        value={this.state.searchTerm}>
-                    </textarea>
-                    <div className='input-group-append'>
-                        <button
-                            className='btn'
-                            onClick={this.sendSearchRequest.bind(this)}
-                        >Suchen</button>
+                {userShares}
+
+                <div>
+                    <div className='daysRemainingForm__consumedDays'>
+                        <span>Übertrage  </span>
+                        <input onChange={this.transferAmountChangeHandler.bind(this)}
+                               type="number"/>
+                        <span>Anteile an</span>
+                        <input onChange={this.receiverAddressChangeHandler.bind(this)}
+                               size="70"/>
                     </div>
+                    <button onClick={this.doTransfer.bind(this)}>Transfer</button>
                 </div>
                 {userShares}
                 {success}
+
             </section>
         );
     }
