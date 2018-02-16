@@ -45,9 +45,16 @@ export default class Page extends Component {
                 balanceOf: new BigNumber(result).toNumber()
             });
         }
-
-        console.log("send: " + this.state.address);
         ContractService.getBalanceOf(this.state.address, balanceOfCallback);
+    }
+
+    doTransfer() {
+        let transferCallback = (error, result) => {
+            this.setState({
+                transferResult: result.toString()
+            });
+        }
+        ContractService.transfer(this.state.receiverAddress, this.state.transferAmount, transferCallback);
     }
 
     componentDidUpdate(prevProps) {
@@ -55,11 +62,13 @@ export default class Page extends Component {
 
     render() {
         let userShares;
+        let success;
 
-        console.log(this.state);
-
-        if(this.state.address){
-            userShares = <p>Anzahl: {this.state.balanceOf.toString()}/{this.state.totalSupply.toString()}</p>
+        if (this.state.address) {
+            userShares = <p>Anzahl: {this.state.balanceOfUser}/{this.state.totalSupply}</p>
+        }
+        if (this.state.transferResult){
+            success = <p>Transfer ist abgeschlossen.</p>
         }
 
         return (
@@ -85,6 +94,8 @@ export default class Page extends Component {
                         >Suchen</button>
                     </div>
                 </div>
+                {userShares}
+                {success}
             </section>
         );
     }
