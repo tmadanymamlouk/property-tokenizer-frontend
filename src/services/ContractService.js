@@ -28,6 +28,11 @@ class ContractService {
     getTotalSupply(callback){
         this.ShareContractInstance.totalSupply(callback);
     }
+
+    getBalanceOf(address, callback){
+        this.ShareContractInstance.balanceOf(address, callback);
+    }
+
 }
 
 export default new ContractService();
