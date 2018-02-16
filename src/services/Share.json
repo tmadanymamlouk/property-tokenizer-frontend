@@ -180,17 +180,8 @@
         "type": "bool"
       }
     ],
-    "payable": true,
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [],
-    "name": "helloWorld",
-    "outputs": [],
-    "payable": true,
-    "stateMutability": "payable",
+    "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -308,6 +299,11 @@
     "payable": false,
     "stateMutability": "nonpayable",
     "type": "constructor"
+  },
+  {
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "fallback"
   },
   {
     "anonymous": false,
