@@ -3,8 +3,8 @@ const PropertyTokenizerABI = require('./PropertyTokenizer.json');
 const ShareABI = require('./Share.json');
 
 const PROPERTYTOKENIZER_CONTRACT_ADDRESS = '0x4e72770760c011647d4873f60a3cf6cdea896cd8';
-const SHARE_CONTRACT_ADDRESS = '0x9fbda871d559710256a2502a2517b794b482db40';
-//const NODE_URL = 'http://localhost:7545';
+const SHARE_CONTRACT_ADDRESS = '0xeec918d74c746167564401103096d45bbd494b74';
+const NODE_URL = 'http://localhost:7545';
 
 class ContractService {
 
@@ -14,6 +14,8 @@ class ContractService {
         } else {
             this.web3 = new Web3(new Web3.providers.HttpProvider(NODE_URL));
         }
+
+        this.web3.eth.defaultAccount = this.web3.eth.coinbase;
 
         var PropertyTokenizerContract = this.web3.eth.contract(PropertyTokenizerABI);
         var ShareContract = this.web3.eth.contract(ShareABI);
@@ -34,10 +36,7 @@ class ContractService {
     }
 
     transfer(address, amount, callback){
-        console.log("address ", address);
-        console.log("amount ", amount);
         this.ShareContractInstance.transfer(address, amount, callback);
-//        this.ShareContractInstance.helloWorld();
     }
 
 }

@@ -26,7 +26,6 @@ export default class Page extends Component {
         }
 
         let totalSupplyCallback = (error, result) => {
-            console.log("totalSupply: " + result)
             this.setState({
                 totalSupply: result.toString()
             });
@@ -55,12 +54,10 @@ export default class Page extends Component {
 
     getBalanceRequest() {
         let balanceOfCallback = (error, result) => {
-            console.log("balance: " + result)
             this.setState({
                 balanceOfUser: result.toString()
             });
         }
-        console.log("getBalance: ", this.state.address);
         ContractService.getBalanceOf(this.state.address, balanceOfCallback);
     }
 
@@ -70,7 +67,6 @@ export default class Page extends Component {
                 transferResult: result.toString()
             });
         }
-        console.log("receiverAddress: ", this.state.receiverAddress);
         ContractService.transfer(this.state.receiverAddress, this.state.transferAmount, transferCallback);
     }
 
@@ -80,12 +76,12 @@ export default class Page extends Component {
     render() {
         let userShares;
         let success;
-console.log("gnaa: ",this.state.address);
+
         if (this.state.address) {
             userShares = <p>Anzahl: {this.state.balanceOfUser}/{this.state.totalSupply}</p>
         }
         if (this.state.transferResult){
-            success = <p>Result: {this.state.transferResult}</p>
+            success = <p>Transfer ist abgeschlossen.</p>
         }
 
         return (
