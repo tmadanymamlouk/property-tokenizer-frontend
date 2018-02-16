@@ -33,6 +33,13 @@ class ContractService {
         this.ShareContractInstance.balanceOf(address, callback);
     }
 
+    transfer(address, amount, callback){
+        console.log("address ", address);
+        console.log("amount ", amount);
+        this.ShareContractInstance.transfer(address, amount, callback);
+//        this.ShareContractInstance.helloWorld();
+    }
+
 }
 
 export default new ContractService();
